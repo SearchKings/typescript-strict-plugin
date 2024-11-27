@@ -60,11 +60,16 @@ comment. To make these files strict too, just remove its' ignore comments.
 
 ## Configuration
 
-Plugin takes extra, non-mandatory arguments `paths`, `exclude` and `excludePattern`. Args `paths` and
-`exclude` accept an array of relative or absolute paths that should be included (property `paths`)
-or excluded (property `exclude`). Arg `excludePattern` accepts an array of strings that will be
-matched with [minimatch](https://github.com/isaacs/minimatch). To add strict mode to files from
-ignored paths you can insert `//@ts-strict` comment.
+The plugin accepts extra, non-mandatory arguments as listed below.
+
+| Argument         | Type       | Description                                                                                  | Example                                     |
+| ---------------- | ---------- | -------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `paths`          | `string[]` | Array of paths to include.                                                                   | `["./src", "/absolute/path/to/source/"]`    |
+| `exclude`        | `string[]` | Array of paths to exclude.                                                                   | `["./src/tests", "./src/fileToExclude.ts"]` |
+| `excludePattern` | `string[]` | Array of patterns to exclude, matched with [minimatch](https://github.com/isaacs/minimatch). | `["**/*.spec.ts"]`                          |
+| `tsConfigFile`   | `string`   | Custom location for the `tsconfig.json` file. Defaults to the root `tsconfig.json`.          | `"/custom/path/tsconfig.json"`              |
+
+To add strict mode to files from ignored paths, you can insert the //@ts-strict comment.
 
 ```json
 {
@@ -84,7 +89,8 @@ ignored paths you can insert `//@ts-strict` comment.
         ],
         "excludePattern": [
           "**/*.spec.ts"
-        ]
+        ],
+        "tsConfigFile": "/custom/path/tsconfig.json"
       }
     ]
   }
