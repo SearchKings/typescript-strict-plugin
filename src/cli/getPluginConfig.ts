@@ -7,9 +7,13 @@ export async function getPluginConfig(): Promise<Config | undefined> {
   const tscConfig = JSON.parse(tscConfigRaw);
   const plugins = tscConfig?.compilerOptions?.plugins;
 
-  return plugins?.find(
+  const pluginConfig = plugins?.find(
     (plugin: { name: string }) =>
       plugin.name === PLUGIN_NAME ||
       (process.env.NODE_ENV === 'test' && plugin.name === '../../dist/plugin'),
   );
+
+  console.log('pluginConfig', pluginConfig);
+
+  return pluginConfig;
 }
