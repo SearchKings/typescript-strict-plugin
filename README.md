@@ -63,11 +63,10 @@ comment. To make these files strict too, just remove its' ignore comments.
 The plugin accepts extra, non-mandatory arguments as listed below.
 
 | Argument         | Type       | Description                                                                                  | Example                                     |
-| ---------------- | ---------- | -------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| ---------------- | ---------- | -------------------------------------------------------------------------------------------- | ------------------------------------------- | --- |
 | `paths`          | `string[]` | Array of paths to include.                                                                   | `["./src", "/absolute/path/to/source/"]`    |
 | `exclude`        | `string[]` | Array of paths to exclude.                                                                   | `["./src/tests", "./src/fileToExclude.ts"]` |
-| `excludePattern` | `string[]` | Array of patterns to exclude, matched with [minimatch](https://github.com/isaacs/minimatch). | `["**/*.spec.ts"]`                          |
-| `tsConfigFile`   | `string`   | Custom location for the `tsconfig.json` file. Defaults to the root `tsconfig.json`.          | `"/custom/path/tsconfig.json"`              |
+| `excludePattern` | `string[]` | Array of patterns to exclude, matched with [minimatch](https://github.com/isaacs/minimatch). | `["**/*.spec.ts"]`                          |     |
 
 To add strict mode to files from ignored paths, you can insert the //@ts-strict comment.
 
@@ -89,8 +88,7 @@ To add strict mode to files from ignored paths, you can insert the //@ts-strict 
         ],
         "excludePattern": [
           "**/*.spec.ts"
-        ],
-        "tsConfigFile": "/custom/path/tsconfig.json"
+        ]
       }
     ]
   }
@@ -105,7 +103,7 @@ To add cli tool to your build time you can add a script to scripts list in packa
 {
   "scripts": {
     ...,
-    "typecheck": "tsc && tsc-strict",
+    "typecheck": "tsc-strict",
   },
 }
 ```

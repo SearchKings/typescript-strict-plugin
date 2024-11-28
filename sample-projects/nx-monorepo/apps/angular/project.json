@@ -6,7 +6,7 @@
   "sourceRoot": "apps/angular/src",
   "tags": [],
   "targets": {
-    "tsc-strict": {
+    "typecheck": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/angular",

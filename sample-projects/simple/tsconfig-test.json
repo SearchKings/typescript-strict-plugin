@@ -6,12 +6,6 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "strict": false,
-    "plugins": [
-      {
-        "name": "typescript-strict-plugin"
-      }
-    ]
+    "noImplicitAny": true
   }
 }
