@@ -5,30 +5,25 @@ import { hideBin } from 'yargs/helpers';
 import { ConfigInternal } from '../../common/types';
 
 /**
- * Retrieves and displays the raw TypeScript Compiler (TSC) configuration.
+ * Retrieves and displays the resolved TypeScript configuration from TSC.
  *
- * This function resolves the TypeScript project path dynamically, including support for
- * custom `tsconfig.json` file names. It executes the TSC CLI with the `--showConfig`
- * option to output the resolved configuration as a string. Designed for flexible setups,
- * such as monorepos with multiple applications, libraries, or packages.
+ * This function dynamically resolves the TypeScript project path and executes
+ * the TSC CLI with the `--showConfig` option to retrieve the fully resolved configuration.
+ * It supports custom `tsconfig.json` file names and adapts to various project structures,
+ * such as monorepos.
  *
  * @async
  * @returns {Promise<Object>} A promise resolving to an object containing:
- *   - `tscConfigRaw`: The raw JSON string of the resolved TypeScript configuration.
- *   - `tsConfigFile`: The name of the custom TypeScript configuration file used,
- *     or `undefined` if the default `tsconfig.json` was applied.
- *
- * @example
- * const config = await showConfig();
- * console.log(config.tscConfigRaw);
+ *   - `tscConfigRaw` {string}: The raw JSON string of the resolved TypeScript configuration.
+ *   - `tsConfigFile` {string}: The name of the TypeScript configuration file used,
+ *     which defaults to `tsconfig.json` unless overridden by `tsConfigName`.
  */
 export const showConfig = async (): Promise<{
   tscConfigRaw: string;
   tsConfigFile: ConfigInternal['tsConfigFile'];
 }> => {
-  const { argv, tsConfigFile } = getArgs();
-  const projectPath = `${path.resolve()}/${tsConfigFile ? tsConfigFile : 'tsconfig.json'}`;
-  const output = await execa('tsc', [...argv, '--showConfig', '--project', projectPath], {
+  const { argv, tsConfigFile, tsConfig } = getArgs();
+  const output = await execa('tsc', [...argv, '--showConfig', '--project', tsConfig], {
     all: true,
     preferLocal: true,
   });
@@ -41,6 +36,8 @@ export const showConfig = async (): Promise<{
 
 let compilerOutputCache = '';
 export const compile = async (): Promise<string> => {
+  const { argv, tsConfig } = getArgs();
+
   if (compilerOutputCache) {
     return compilerOutputCache;
   }
@@ -48,7 +45,7 @@ export const compile = async (): Promise<string> => {
   try {
     const compilerResult = await execa(
       'tsc',
-      [...process.argv.slice(2), '--strict', '--noEmit', '--pretty', 'false', '--listFiles'],
+      [...argv, '--strict', '--noEmit', '--pretty', 'false', '--listFiles', '--project', tsConfig],
       {
         all: true,
         preferLocal: true,
@@ -71,18 +68,22 @@ export const compile = async (): Promise<string> => {
 };
 
 /**
- * Parses command-line arguments and extracts TypeScript configuration details.
+ * Parses command-line arguments to extract TypeScript configuration details.
  *
- * This function uses `yargs` to parse command-line arguments and processes them
- * into an array of argument strings suitable for passing to the TypeScript Compiler (TSC).
- * It also identifies the custom TypeScript configuration file name if provided.
+ * This function processes the command-line arguments using `yargs`, identifies any custom
+ * TypeScript configuration file specified via the `tsConfigName` argument, and formats
+ * other arguments for use with the TypeScript Compiler (TSC). Additionally, it resolves
+ * the full path to the specified or default `tsconfig.json` file.
  *
  * @returns {Object} An object containing:
- *   - `argv`: An array of processed arguments excluding the defaults (`_`, `$0`, `project`, `tsConfigName`).
- *   - `tsConfigFile`: The name of the custom TypeScript configuration file, or `undefined` if not specified.
+ *   - `argv` {string[]}: An array of arguments formatted for TSC (e.g., `--key value`),
+ *     excluding certain defaults like `_`, `$0`, `project`, and `tsConfigName`.
+ *   - `tsConfigFile` {string}: The name of the TypeScript configuration file to use,
+ *     defaulting to `tsconfig.json` if no custom file is specified.
+ *   - `tsConfig` {string}: The absolute path to the resolved TypeScript configuration file.
  */
-const getArgs = (): { argv: string[]; tsConfigFile: string | undefined } => {
-  let tsConfigFile: string | undefined;
+const getArgs = (): { argv: string[]; tsConfigFile: string; tsConfig: string } => {
+  let tsConfigFile: string = 'tsconfig.json';
   const args = yargs(hideBin(process.argv)).parse();
   const argv = Object.entries(args).reduce<string[]>((acc, arg) => {
     const [key, value] = arg;
@@ -101,6 +102,7 @@ const getArgs = (): { argv: string[]; tsConfigFile: string | undefined } => {
   return {
     argv,
     tsConfigFile,
+    tsConfig: `${path.resolve()}/${tsConfigFile}`,
   };
 };
 

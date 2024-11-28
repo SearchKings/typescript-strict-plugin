@@ -13,5 +13,9 @@ export async function getPluginConfig(): Promise<(Config & ConfigInternal) | und
       (process.env.NODE_ENV === 'test' && plugin.name === '../../dist/plugin'),
   );
 
-  return { ...pluginConfig, tsConfigFile };
+  return {
+    ...pluginConfig,
+    tsConfigFile,
+    hasPluginConfigured: plugins?.some((plugin: { name: string }) => plugin.name === PLUGIN_NAME),
+  };
 }

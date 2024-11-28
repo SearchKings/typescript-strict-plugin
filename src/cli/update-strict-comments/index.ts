@@ -11,10 +11,9 @@ import { getPluginConfig } from '../getPluginConfig';
 export const run = async () => {
   const pluginConfig = await getPluginConfig();
 
-  if (!pluginConfig) {
-    console.log(chalk.red(notConfiguredError));
+  if (!pluginConfig?.hasPluginConfigured) {
+    console.log(chalk.red(notConfiguredError(pluginConfig?.tsConfigFile)));
     process.exit(1);
-    return;
   }
 
   const strictFilePaths = await waitWithSpinner(findStrictFiles, 'Looking for strict files...');
@@ -22,7 +21,6 @@ export const run = async () => {
   if (!strictFilePaths.length) {
     console.log(chalk.red(noStrictFilesError));
     process.exit(1);
-    return;
   }
 
   console.log(

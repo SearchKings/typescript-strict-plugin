@@ -1,7 +1,10 @@
-export const notConfiguredError = `
-typescript-strict-plugin isn't configured in tsconfig.json
-        
-Please add following configuration:
+import { ConfigInternal } from '../common/types';
+
+export const notConfiguredError = (tsConfigFile: ConfigInternal['tsConfigFile']) => `
+The "typescript-strict-plugin" isn't configured in [${
+  tsConfigFile ? tsConfigFile : 'tsconfig.json'
+}], please add following configuration:
+
 {
   "compilerOptions": {
     ...
@@ -10,6 +13,7 @@ Please add following configuration:
     }]
   },
 }
+
 `;
 
 export const noStrictFilesError = `

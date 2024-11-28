@@ -5,5 +5,6 @@ export interface Config {
 }
 
 export interface ConfigInternal {
+  hasPluginConfigured?: boolean;
   tsConfigFile?: string | undefined;
 }
