@@ -1,33 +1,40 @@
 {
-  "name": "angualr",
+  "name": "angular",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/angualr/src",
+  "sourceRoot": "apps/angular/src",
   "tags": [],
   "targets": {
+    "tsc-strict": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/angular",
+        "command": "tsc-strict"
+      }
+    },
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/angualr",
-        "index": "apps/angualr/src/index.html",
-        "browser": "apps/angualr/src/main.ts",
+        "outputPath": "dist/apps/angular",
+        "index": "apps/angular/src/index.html",
+        "browser": "apps/angular/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/angualr/tsconfig.app.json",
+        "tsConfig": "apps/angular/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/angualr/public"
+            "input": "apps/angular/public"
           }
         ],
-        "styles": ["apps/angualr/src/styles.scss"],
+        "styles": ["apps/angular/src/styles.scss"],
         "scripts": [],
-        "server": "apps/angualr/src/main.server.ts",
+        "server": "apps/angular/src/main.server.ts",
         "prerender": true,
         "ssr": {
-          "entry": "apps/angualr/server.ts"
+          "entry": "apps/angular/server.ts"
         }
       },
       "configurations": {
@@ -58,10 +65,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "angualr:build:production"
+          "buildTarget": "angular:build:production"
         },
         "development": {
-          "buildTarget": "angualr:build:development"
+          "buildTarget": "angular:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -69,7 +76,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "angualr:build"
+        "buildTarget": "angular:build"
       }
     },
     "lint": {
@@ -79,14 +86,14 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/angualr/jest.config.ts"
+        "jestConfig": "apps/angular/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "angualr:build",
-        "staticFilePath": "dist/apps/angualr/browser",
+        "buildTarget": "angular:build",
+        "staticFilePath": "dist/apps/angular/browser",
         "spa": true
       }
     }

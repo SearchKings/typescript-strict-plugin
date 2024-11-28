@@ -9,6 +9,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
+  "plugins": [
+    {
+      "name": "typescript-strict-plugin"
+    }
+  ],
   "files": [],
   "include": [],
   "references": [
