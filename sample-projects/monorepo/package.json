@@ -1,5 +1,5 @@
 {
-  "name": "sample-project",
+  "name": "monorepo-project",
   "version": "1.0.0",
   "description": "https://github.com/Microsoft/TypeScript/wiki/Writing-a-Language-Service-Plugin",
   "main": "index.js",
@@ -10,12 +10,16 @@
     "build": "tsc",
     "doc": "echo nothing && exit 0"
   },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^10.3.2",
-    "typescript-strict-plugin": "file:../../typescript-strict-plugin",
+    "typescript-strict-plugin": "file:../../../typescript-strict-plugin",
     "typescript": "5.2.2"
   }
 }
