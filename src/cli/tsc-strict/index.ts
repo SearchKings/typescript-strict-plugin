@@ -36,7 +36,6 @@ export const run = async () => {
   if (errors.length > 0) {
     console.log(`💥 Found ${errors.length} ${pluralize('error', errors.length)}`);
     process.exit(1);
-    return;
   }
 
   console.log(`🎉 ${chalk.green('All files passed')}`);
