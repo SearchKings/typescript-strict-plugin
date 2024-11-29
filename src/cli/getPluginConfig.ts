@@ -14,7 +14,7 @@ export async function getPluginConfig(): Promise<(Config & ConfigInternal) | und
   );
 
   return {
-    ...pluginConfig,
+    ...(pluginConfig || {}),
     tsConfigFile,
     hasPluginConfigured: plugins?.some((plugin: { name: string }) => plugin.name === PLUGIN_NAME),
   };

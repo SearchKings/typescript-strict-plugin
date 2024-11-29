@@ -24,8 +24,6 @@ export function isFile(path: string) {
 export function getProjectPathFromArgs(): string | undefined {
   const args = process.argv.slice(2);
 
-  console.log('getProjectPathFromArgs', args);
-
   for (let index = 0; index < args.length; index++) {
     const arg = args[index];
     if (arg === '--project') {
