@@ -51,8 +51,8 @@ add plugin to your `tsconfig.json`:
 
 and run the migration script
 
-```
-./node_modules/.bin/update-strict-comments
+```bash
+yarn update-strict-comments
 ```
 
 That's it! You should be able to see strict typechecking in files without the `@ts-strict-ignore`
@@ -110,8 +110,8 @@ To add cli tool to your build time you can add a script to scripts list in packa
 
 Then you can simply run
 
-```shell
-yarn tsc-strict
+```bash
+yarn typecheck
 ```
 
 All your strict files should be checked from command line.
@@ -121,7 +121,7 @@ All your strict files should be checked from command line.
 Use the `--tsconfig` option to specify a custom TypeScript configuration file. This is particularly
 useful in monorepos or multi-project setups where each app or library has its own `tsconfig.json`.
 
-```shell
+```bash
 yarn tsc-strict --tsconfig tsconfig.app.json
 ```
 
@@ -148,7 +148,7 @@ directory:
 
 You can also pass some `tsc` arguments to the `tsc-strict` to override default compiler options e.g.
 
-```shell
+```bash
 yarn tsc-strict --strictNullChecks false
 ```
 
@@ -181,15 +181,13 @@ command available in the
 
 ## Testing the plugin
 
-### Manually
-
-run
+### Simple Project
 
 ```bash
 npm i
 ```
 
-inside root folder and `sample-project` folder and then run
+---
 
 ```bash
 npm run build
@@ -201,16 +199,58 @@ or
 npm run dev
 ```
 
-and restart typescript service inside `sample-project`. Files in `sample-project` folder should use
-a local plugin. After you made changes to a plugin you should probably restart typescript service in
-order to reload the plugin.
+And restart typescript service inside `sample-projects/simple`. Files in `sample-projects/simple`
+folder should use a local plugin. After you made changes to a plugin you should probably restart
+typescript service in order to reload the plugin.
+
+#### To test typechecking
+
+```bash
+npm run typecheck
+```
+
+#### To test typechecking with custom arguments
+
+```bash
+npm run typecheck
+```
 
 ### Tests
 
 In order to run tests run
 
 ```bash
-npm run test
+npm run typecheck-custom-config
+```
+
+### NX Monorepo Project
+
+```bash
+npm i
+```
+
+---
+
+```bash
+nx run build
+```
+
+or
+
+```bash
+nx run serve
+```
+
+#### To test typechecking
+
+```bash
+nx run typecheck
+```
+
+#### To test migration
+
+```bash
+nx run typecheck-migration
 ```
 
 ## Contributing

@@ -13,6 +13,13 @@
         "command": "tsc-strict --tsconfig tsconfig.app.json"
       }
     },
+    "typecheck-migration": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/angular",
+        "command": "update-strict-comments --tsconfig tsconfig.app.json"
+      }
+    },
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
