@@ -13,14 +13,14 @@ export const run = async () => {
 
   if (!pluginConfig?.hasPluginConfigured) {
     console.log(chalk.red(notConfiguredError(pluginConfig?.tsConfigFile)));
-    process.exit(1);
+    return process.exit(1);
   }
 
   const strictFilePaths = await waitWithSpinner(findStrictFiles, 'Looking for strict files...');
 
   if (!strictFilePaths.length) {
     console.log(chalk.red(noStrictFilesError));
-    process.exit(1);
+    return process.exit(1);
   }
 
   console.log(
