@@ -10,7 +10,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/angular",
-        "command": "tsc-strict --tsConfigName tsconfig.app.json"
+        "command": "tsc-strict --tsconfig tsconfig.app.json"
       }
     },
     "build": {

@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "tsc",
     "typecheck": "tsc-strict",
-    "typecheck-custom-config": "tsc-strict --tsConfigName tsconfig-test.json",
+    "typecheck-custom-config": "tsc-strict --tsconfig tsconfig-test.json",
     "doc": "echo nothing && exit 0"
   },
   "keywords": [],

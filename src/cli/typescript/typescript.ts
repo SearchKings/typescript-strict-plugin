@@ -16,7 +16,7 @@ import { ConfigInternal } from '../../common/types';
  * @returns {Promise<Object>} A promise resolving to an object containing:
  *   - `tscConfigRaw` {string}: The raw JSON string of the resolved TypeScript configuration.
  *   - `tsConfigFile` {string}: The name of the TypeScript configuration file used,
- *     which defaults to `tsconfig.json` unless overridden by `tsConfigName`.
+ *     which defaults to `tsconfig.json` unless overridden by `tsconfig`.
  */
 export const showConfig = async (): Promise<{
   tscConfigRaw: string;
@@ -71,13 +71,13 @@ export const compile = async (): Promise<string> => {
  * Parses command-line arguments to extract TypeScript configuration details.
  *
  * This function processes the command-line arguments using `yargs`, identifies any custom
- * TypeScript configuration file specified via the `tsConfigName` argument, and formats
+ * TypeScript configuration file specified via the `tsconfig` argument, and formats
  * other arguments for use with the TypeScript Compiler (TSC). Additionally, it resolves
  * the full path to the specified or default `tsconfig.json` file.
  *
  * @returns {Object} An object containing:
  *   - `argv` {string[]}: An array of arguments formatted for TSC (e.g., `--key value`),
- *     excluding certain defaults like `_`, `$0`, `project`, and `tsConfigName`.
+ *     excluding certain defaults like `_`, `$0`, `project`, and `tsconfig`.
  *   - `tsConfigFile` {string}: The name of the TypeScript configuration file to use,
  *     defaulting to `tsconfig.json` if no custom file is specified.
  *   - `tsConfig` {string}: The absolute path to the resolved TypeScript configuration file.
@@ -88,11 +88,11 @@ const getArgs = (): { argv: string[]; tsConfigFile: string; tsConfig: string } =
   const argv = Object.entries(args).reduce<string[]>((acc, arg) => {
     const [key, value] = arg;
 
-    if (key === 'tsConfigName') {
+    if (key === 'tsconfig') {
       tsConfigFile = value;
     }
 
-    if (key !== '_' && key !== '$0' && key !== 'project' && key !== 'tsConfigName') {
+    if (key !== '_' && key !== '$0' && key !== 'project' && key !== 'tsconfig') {
       acc.push(...[`--${key}`, value]);
     }
 

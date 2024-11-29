@@ -118,12 +118,11 @@ All your strict files should be checked from command line.
 
 ### Custom TypeScript Configuration File
 
-Use the `--tsConfigName` option to specify a custom TypeScript configuration file. This is
-particularly useful in monorepos or multi-project setups where each app or library has its own
-`tsconfig.json`.
+Use the `--tsconfig` option to specify a custom TypeScript configuration file. This is particularly
+useful in monorepos or multi-project setups where each app or library has its own `tsconfig.json`.
 
 ```shell
-yarn tsc-strict --tsConfigName tsconfig.app.json
+yarn tsc-strict --tsconfig tsconfig.app.json
 ```
 
 Note: This command assumes the specified `tsconfig` file is in the app's directory (not the monorepo
@@ -137,7 +136,7 @@ directory:
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/test-app",
-        "command": "tsc-strict --tsConfigName tsconfig.app.json"
+        "command": "tsc-strict --tsconfig tsconfig.app.json"
       }
     },
     ...
