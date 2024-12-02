@@ -11,6 +11,9 @@
     "plugins": [
       {
         "name": "typescript-strict-plugin"
+        // "paths": ["./src/nested"]
+        // "exclude": ["./src/nested"]
+        // "excludePattern": ["**/test.ts"]
       }
     ]
   }

@@ -18,14 +18,7 @@ export function isFileStrict({
   projectPath,
   isCommentPresent,
 }: IsFileStrictConfig): boolean {
-  if (isCommentPresent(TS_STRICT_IGNORE_COMMENT, filePath)) {
-    return false;
-  }
-
-  if (isCommentPresent(TS_STRICT_COMMENT, filePath)) {
-    return true;
-  }
-
+  const configPaths = config?.paths ?? [];
   const configExclude = config?.exclude ?? [];
   const configExcludePattern = config?.excludePattern ?? [];
 
@@ -43,11 +36,18 @@ export function isFileStrict({
     return false;
   }
 
-  const configPaths = config?.paths ?? [];
   const fileStrictByPath = isFileStrictByPath({ filePath, configPaths, projectPath });
 
   if (configPaths.length > 0 && !fileStrictByPath) {
     return false;
+  }
+
+  if (isCommentPresent(TS_STRICT_IGNORE_COMMENT, filePath)) {
+    return false;
+  }
+
+  if (isCommentPresent(TS_STRICT_COMMENT, filePath)) {
+    return true;
   }
 
   return true;
