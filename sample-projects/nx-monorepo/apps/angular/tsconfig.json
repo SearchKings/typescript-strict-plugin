@@ -12,6 +12,9 @@
     "plugins": [
       {
         "name": "typescript-strict-plugin"
+        // "paths": ["./src/app/nested"]
+        // "exclude": ["./src/app/nested"]
+        // "excludePattern": ["**/test-nested.ts"]
       }
     ]
   },

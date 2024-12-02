@@ -3,10 +3,12 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
 import { boo2 } from './test';
+import { booNested } from './app/nested/test-nested';
 import { booAbc } from './test-2';
 
 // This should error because it is possible undefined
 console.log(boo2);
+console.log(booNested);
 
 // This line is intentionally ignored by strict type-checking rules - "@ts-strict-ignore"
 console.log(booAbc);
