@@ -11,18 +11,16 @@ import { getPluginConfig } from '../getPluginConfig';
 export const run = async () => {
   const pluginConfig = await getPluginConfig();
 
-  if (!pluginConfig) {
-    console.log(chalk.red(notConfiguredError));
-    process.exit(1);
-    return;
+  if (!pluginConfig?.hasPluginConfigured) {
+    console.log(chalk.red(notConfiguredError(pluginConfig?.tsConfigFile)));
+    return process.exit(1);
   }
 
   const strictFilePaths = await waitWithSpinner(findStrictFiles, 'Looking for strict files...');
 
   if (!strictFilePaths.length) {
     console.log(chalk.red(noStrictFilesError));
-    process.exit(1);
-    return;
+    return process.exit(1);
   }
 
   console.log(
@@ -37,8 +35,7 @@ export const run = async () => {
 
   if (errors.length > 0) {
     console.log(`💥 Found ${errors.length} ${pluralize('error', errors.length)}`);
-    process.exit(1);
-    return;
+    return process.exit(1);
   }
 
   console.log(`🎉 ${chalk.green('All files passed')}`);

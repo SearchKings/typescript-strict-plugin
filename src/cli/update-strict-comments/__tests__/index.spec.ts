@@ -26,27 +26,34 @@ describe('update-strict-comments root', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    getPluginConfigMock.mockResolvedValue({});
+    getPluginConfigMock.mockResolvedValue({
+      hasPluginConfigured: true,
+      tsConfigFile: 'tsconfig.json',
+    });
     updateStrictCommentsMock.mockResolvedValue({ updatedFileCount: 0 });
   });
 
   it('should display no config error', async () => {
     // given
-    getPluginConfigMock.mockResolvedValue(undefined);
+    getPluginConfigMock.mockResolvedValue({
+      hasPluginConfigured: false,
+      tsConfigFile: 'tsconfig.json',
+    });
 
     // when
     await run();
 
     // then
-    expect(console.log).toHaveBeenCalledWith(
-      expect.stringMatching(/typescript-strict-plugin isn't configured in tsconfig.json/i),
-    );
+    expect(console.log).toHaveBeenCalledWith(expect.stringMatching(/isn't configured in/i));
     expect(process.exit).toHaveBeenCalledWith(1);
   });
 
   it('should display no strict files error', async () => {
     // given
-    getPluginConfigMock.mockResolvedValue({});
+    getPluginConfigMock.mockResolvedValue({
+      hasPluginConfigured: true,
+      tsConfigFile: 'tsconfig.json',
+    });
     findStrictFilesMock.mockResolvedValue([]);
 
     // when

@@ -9,7 +9,7 @@ export async function findStrictFiles(): Promise<string[]> {
   const cliStrictFileChecker = new CliStrictFileChecker();
   const pluginConfig = await getPluginConfig();
 
-  if (!pluginConfig) {
+  if (!pluginConfig?.hasPluginConfigured) {
     return [];
   }
 

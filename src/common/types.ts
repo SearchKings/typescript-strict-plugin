@@ -3,3 +3,8 @@ export interface Config {
   exclude?: string[];
   excludePattern?: string[];
 }
+
+export interface ConfigInternal {
+  hasPluginConfigured?: boolean;
+  tsConfigFile?: string | undefined;
+}

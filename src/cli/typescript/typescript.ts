@@ -1,16 +1,41 @@
 import execa, { ExecaError } from 'execa';
+import { ConfigInternal } from '../../common/types';
+import { getArgs } from '../../common/utils';
 
-export const showConfig = async (): Promise<string> => {
-  const output = await execa('tsc', [...process.argv.slice(2), '--showConfig'], {
+/**
+ * Retrieves and displays the resolved TypeScript configuration from TSC.
+ *
+ * This function dynamically resolves the TypeScript project path and executes
+ * the TSC CLI with the `--showConfig` option to retrieve the fully resolved configuration.
+ * It supports custom `tsconfig.json` file names and adapts to various project structures,
+ * such as monorepos.
+ *
+ * @async
+ * @returns {Promise<Object>} A promise resolving to an object containing:
+ *   - `tscConfigRaw` {string}: The raw JSON string of the resolved TypeScript configuration.
+ *   - `tsConfigFile` {string}: The name of the TypeScript configuration file used,
+ *     which defaults to `tsconfig.json` unless overridden by `tsconfig`.
+ */
+export const showConfig = async (): Promise<{
+  tscConfigRaw: string;
+  tsConfigFile: ConfigInternal['tsConfigFile'];
+}> => {
+  const { argv, tsConfigFile, tsConfig } = getArgs();
+  const output = await execa('tsc', [...argv, '--showConfig', '--project', tsConfig], {
     all: true,
     preferLocal: true,
   });
 
-  return output.stdout;
+  return {
+    tscConfigRaw: output.stdout,
+    tsConfigFile,
+  };
 };
 
 let compilerOutputCache = '';
 export const compile = async (): Promise<string> => {
+  const { argv, tsConfig } = getArgs();
+
   if (compilerOutputCache) {
     return compilerOutputCache;
   }
@@ -18,7 +43,7 @@ export const compile = async (): Promise<string> => {
   try {
     const compilerResult = await execa(
       'tsc',
-      [...process.argv.slice(2), '--strict', '--noEmit', '--pretty', 'false', '--listFiles'],
+      [...argv, '--strict', '--noEmit', '--pretty', 'false', '--listFiles', '--project', tsConfig],
       {
         all: true,
         preferLocal: true,

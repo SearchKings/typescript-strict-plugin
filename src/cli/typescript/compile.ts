@@ -46,7 +46,7 @@ export async function compile(): Promise<Map<string, string[]>> {
 
   if (tscOutput.some((it) => it.startsWith('error'))) {
     console.log(`💥 Typescript did not compile due to some errors. Errors: `, tscOutput);
-    process.exit(1);
+    return process.exit(1);
   }
 
   return getPathToErrorsMap(tscOutput);
