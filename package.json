@@ -13,11 +13,11 @@
     "TypeScript Language Service"
   ],
   "bugs": {
-    "url": "https://github.com/allegro/typescript-strict-plugin/issues"
+    "url": "https://github.com/searchKings/typescript-strict-plugin/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allegro/typescript-strict-plugin.git"
+    "url": "git+https://github.com/searchKings/typescript-strict-plugin.git"
   },
   "license": "MIT",
   "bin": {
@@ -89,5 +89,5 @@
       "pre-commit": "lint-staged"
     }
   },
-  "homepage": "https://github.com/allegro/typescript-strict-plugin#readme"
+  "homepage": "https://github.com/SearchKings/typescript-strict-plugin#readme"
 }
