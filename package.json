@@ -1,6 +1,6 @@
 {
   "name": "@searchkings/typescript-strict-plugin",
-  "version": "2.4.4",
+  "version": "3.0.0-alpha.0",
   "description": "Typescript tools that help with migration to the strict mode",
   "author": "Allegro",
   "contributors": [
