@@ -1,7 +1,6 @@
 import execa, { ExecaError } from 'execa';
 import { ConfigInternal } from '../../common/types';
 import { getArgs } from '../../common/utils';
-import { getPluginConfig } from '../getPluginConfig';
 
 /**
  * Retrieves and displays the resolved TypeScript configuration from TSC.
@@ -36,7 +35,6 @@ export const showConfig = async (): Promise<{
 let compilerOutputCache = '';
 export const compile = async (): Promise<string> => {
   const { argv, tsConfig } = getArgs();
-  const pluginConfig = await getPluginConfig();
 
   if (compilerOutputCache) {
     return compilerOutputCache;
@@ -45,16 +43,7 @@ export const compile = async (): Promise<string> => {
   try {
     const compilerResult = await execa(
       'tsc',
-      [
-        ...argv,
-        ...(!pluginConfig?.relaxed ? ['--strict'] : []),
-        '--noEmit',
-        '--pretty',
-        'false',
-        '--listFiles',
-        '--project',
-        tsConfig,
-      ],
+      [...argv, '--strict', '--noEmit', '--pretty', 'false', '--listFiles', '--project', tsConfig],
       {
         all: true,
         preferLocal: true,
