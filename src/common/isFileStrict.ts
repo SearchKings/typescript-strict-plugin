@@ -21,6 +21,16 @@ export function isFileStrict({
   const configPaths = config?.paths ?? [];
   const configExclude = config?.exclude ?? [];
   const configExcludePattern = config?.excludePattern ?? [];
+  const isIgnoreCommentPresent = isCommentPresent(TS_STRICT_IGNORE_COMMENT, filePath);
+  const isStrictCommentPresent = isCommentPresent(TS_STRICT_COMMENT, filePath);
+
+  if (isIgnoreCommentPresent) {
+    return false;
+  }
+
+  if (isStrictCommentPresent) {
+    return true;
+  }
 
   if (
     isFileExcludedByPath({
@@ -38,16 +48,8 @@ export function isFileStrict({
 
   const fileStrictByPath = isFileStrictByPath({ filePath, configPaths, projectPath });
 
-  if (configPaths.length > 0 && !fileStrictByPath) {
+  if (configPaths.length && !fileStrictByPath) {
     return false;
-  }
-
-  if (isCommentPresent(TS_STRICT_IGNORE_COMMENT, filePath)) {
-    return false;
-  }
-
-  if (isCommentPresent(TS_STRICT_COMMENT, filePath)) {
-    return true;
   }
 
   return true;

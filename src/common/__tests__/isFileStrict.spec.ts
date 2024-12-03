@@ -49,7 +49,7 @@ describe('isFileStrict', () => {
     };
 
     // when
-    const result = isFileStrict({ filePath, isCommentPresent, config });
+    const result = isFileStrict({ filePath, config, isCommentPresent });
 
     // then
     expect(result).toBe(true);
