@@ -89,5 +89,5 @@
       "pre-commit": "lint-staged"
     }
   },
-  "homepage": "https://github.com/allegro/typescript-strict-plugin#readme"
+  "homepage": "https://github.com/searchkings/typescript-strict-plugin#readme"
 }
