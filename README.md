@@ -62,11 +62,12 @@ comment. To make these files strict too, just remove its' ignore comments.
 
 The plugin accepts extra, non-mandatory arguments as listed below.
 
-| Argument       | Type     | Description                                                                                  | Example                                   |
-| -------------- | -------- | -------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| paths          | string[] | Array of paths to include.                                                                   | ["./src", "/absolute/path/to/source/"]    |
-| exclude        | string[] | Array of paths to exclude.                                                                   | ["./src/tests", "./src/fileToExclude.ts"] |
-| excludePattern | string[] | Array of patterns to exclude, matched with [minimatch](https://github.com/isaacs/minimatch). | ["**/*.spec.ts"]                          |
+| Argument       | Type     | Description                                                                                                                                   | Example                                   |
+| -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| paths          | string[] | Array of paths to include.                                                                                                                    | ["./src", "/absolute/path/to/source/"]    |
+| exclude        | string[] | Array of paths to exclude.                                                                                                                    | ["./src/tests", "./src/fileToExclude.ts"] |
+| excludePattern | string[] | Array of patterns to exclude, matched with [minimatch](https://github.com/isaacs/minimatch).                                                  | ["**/*.spec.ts"]                          |
+| relaxed        | boolean  | Flag to disable strict TypeScript checks (`--strict`), while using all existing `compilerOptions` from the project's tsconfig. Default: false | true                                      |
 
 To add strict mode to files from ignored paths, you can insert the //@ts-strict comment.
 
